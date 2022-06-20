@@ -1,0 +1,61 @@
+﻿<UserControl x:Class="DnD_Item_Manager.View.OthersTab.PropertiesManagerV"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DnD_Item_Manager.View.OthersTab"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+    <!-- Tytuł i lista właściwości -->
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="6*"/>
+    <!-- Opis i input właściwości -->
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="2*"/>
+    <!-- Opcje dla właściwości -->
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+    <!-- Etykieta tabeli 2 pod -->
+        <TextBlock Grid.Row="0" Text="Properties" HorizontalAlignment="Center"/>
+    <!-- Tabela zawierająca wszystkie właściwości -->
+        <DataGrid Grid.Row="1" Margin="2"
+                                      AutoGenerateColumns="False"
+                                      IsReadOnly="True" SelectionMode="Single"
+                                      ItemsSource="{Binding Path=Properties}"
+                                      SelectedItem="{Binding Path=SelectedProperty}">
+    <!-- Własne kolumny, których jest mniej niż w tabeli źródłowej -->
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Width="*" Binding="{Binding name}"/>
+                <DataGridTextColumn Header="Description" Width="3*" Binding="{Binding description}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    <!-- Informacja co jest w pudle pod -->
+        <TextBlock Grid.Row="2" Text="Name" HorizontalAlignment="Center"/>
+    <!-- Zawiera nazwe właściwości -->
+        <TextBox Grid.Row="3" Margin="2"
+                 Text="{Binding PropertyName}"/>
+    <!-- Informuje co jest pod nim -->
+        <TextBlock Grid.Row="4" Text="Description" HorizontalAlignment="Center"/>
+    <!-- Zawiera opis właściwości -->
+        <TextBox Grid.Row="5" Margin="2"
+                 Text="{Binding PropertyDescription}"/>
+    <!-- Wszystkie opcje dl właściwosi -->
+        <Grid Grid.Row="6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+    <!-- Nowa właściwość na podstawie powyższych pudeł-->
+            <Button Grid.Column="0" Content="Save as New" Margin="1" Command="{Binding NewPropertyCommand}"/>
+    <!-- Zapis właściwości dla wybranej w liście na szczycie właściwości na podstawie pudeł -->
+            <Button Grid.Column="1" Content="Save" Margin="1" Command="{Binding SavePropertyCommand}"/>
+    <!-- Usunięcie właściwości wybranej w powyższej liście-->
+            <Button Grid.Column="2" Content="Delete" Margin="1" Command="{Binding DeletePropertyCommand}"/>
+        </Grid>
+    </Grid>
+</UserControl>

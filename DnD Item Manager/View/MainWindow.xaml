@@ -1,0 +1,70 @@
+﻿<Window x:Class="DnD_Item_Manager.View.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DnD_Item_Manager.View"
+        xmlns:tabs="clr-namespace:DnD_Item_Manager.View.Items_tab"
+        xmlns:tabs2="clr-namespace:DnD_Item_Manager.View.OthersTab"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        mc:Ignorable="d"
+        Title="MainWindow" 
+        Height="450" Width="800"
+        MinHeight="450" MinWidth="800">
+    <Grid>
+        <!-- V Zawiera główne opcje V -->
+        <TabControl TabStripPlacement="Left"
+                    Margin="2">
+            <!-- Zawiera przedmioty -->
+            <TabItem Header="Items">
+                <!-- Poniższe 3 linie obracają nagłówki karty o 90 stopni przeciwnie do wskazówek zegara -->
+                <TabItem.LayoutTransform>
+                    <RotateTransform Angle="-90"/>
+                </TabItem.LayoutTransform>
+                <Grid>
+                    <!-- Zawiera wszystkie kategorie przedmiotów odpowiednio opisane w nagłówkach -->
+                    <TabControl TabStripPlacement="Top"
+                                Margin="2">
+                        <TabItem Header="Armor">
+                            <tabs:Armor/>
+                        </TabItem>
+                        <TabItem Header="Weapon">
+                            <tabs:Weapon/>
+                        </TabItem>
+                        <TabItem Header="Adventure gear">
+                            <tabs:AG/>
+                        </TabItem>
+                        <TabItem Header="Tool">
+                            <tabs:Tool/>
+                        </TabItem>
+                        <TabItem Header="Mounts &amp; Vehicles">
+                            <tabs:MV/>
+                        </TabItem>
+                        <TabItem Header="Currency">
+                            <tabs:Currency/>
+                        </TabItem>
+                        <TabItem Header="Other">
+                            <tabs:Other/>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+            </TabItem>
+            <!-- Zawiera wszystkie tabele wykkorzystywane w przedmiotach -->
+            <TabItem Header="Others">
+                <TabItem.LayoutTransform>
+                    <RotateTransform Angle="-90"/>
+                </TabItem.LayoutTransform>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                    </Grid.ColumnDefinitions>
+                    <tabs2:DamageTypeManagerV Grid.Column="0"/>
+                    <tabs2:DiceManagerv Grid.Column="1"/>
+                    <tabs2:PropertiesManagerV Grid.Column="2"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

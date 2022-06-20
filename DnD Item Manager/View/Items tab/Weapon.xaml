@@ -1,0 +1,169 @@
+﻿<UserControl x:Class="DnD_Item_Manager.View.Items_tab.Weapon"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DnD_Item_Manager.View.Items_tab"
+             xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+    <!-- Lista bronii -->
+        <DataGrid Grid.RowSpan="3" Grid.Row="0" Grid.Column="0" Margin="2"
+                                      AutoGenerateColumns="False"
+                                      IsReadOnly="True" SelectionMode="Single"
+                                      ItemsSource="{Binding Path=Weapon.ItemDGS}" 
+                                      SelectedItem="{Binding Path=Weapon.Selected}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Width="6*" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Weight" Width="2*" Binding="{Binding Weight}"/>
+                <DataGridTextColumn Header="Class" Width="4*" Binding="{Binding Class}"/>
+                <DataGridTextColumn Header="Proficiency" Width="4*" Binding="{Binding Proficiency}"/>
+            </DataGrid.Columns>
+        <!-- Wywołuje Komende UpdateEditCommand przy wyborze bronii -->
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding Path=UpdateEditCommand}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </DataGrid>
+    <!-- Pola do edycji bronii -->
+        <Grid Grid.Column="1" Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Column="1" Grid.Row="0" Margin="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="6*"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="4*"/>
+                    <ColumnDefinition Width="4*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0"  Margin="1"
+                     Text="{Binding ItemName}"/>
+                <TextBox Grid.Column="1" Margin="1"
+                     Text="{Binding ItemWeight}"/>
+                <ComboBox Grid.Column="2" Margin="1"
+                      ItemsSource="{Binding WeaponClassList}"
+                      SelectedItem="{Binding ItemClass}"/>
+                <ComboBox Grid.Column="3" Margin="1"
+                      ItemsSource="{Binding WeaponProficiencyList}"
+                      SelectedItem="{Binding ItemProficiency}"/>
+            </Grid>
+            <TextBox Grid.Row="1" Grid.Column="1" Margin="2"
+                                       Text="{Binding ItemDesc}"/>
+        <!-- Opcje bronii -->
+            <Grid Grid.Column="1" Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Margin="1"
+                        Content="Save as New" Command="{Binding NewWeaponCommand}"/>
+                <Button Grid.Column="1" Margin="1"
+                        Content="Save" Command="{Binding SaveWeaponCommand}"/>
+                <Button Grid.Column="2" Margin="1"
+                        Content="Delete" Command="{Binding Path=Weapon.DeleteItemCommand}"/>
+            </Grid>
+        </Grid>
+    <!-- Wszytkie obrażenia danej bronii -->
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="Damage" HorizontalAlignment="Center"/>
+            <DataGrid Grid.Row="1" Margin="2" 
+                                      AutoGenerateColumns="False"
+                                      IsReadOnly="True" SelectionMode="Single"
+                                      ItemsSource="{Binding Path=Weapon.DamageDGS}"
+                                      SelectedItem="{Binding Path=Weapon.SelectedDamage}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Type" Width="3*" Binding="{Binding Type}"/>
+                    <DataGridTextColumn Header="Value" Width="*" Binding="{Binding Value}"/>
+                    <DataGridTextColumn Header="Dice" Width="*" Binding="{Binding Dice}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Grid Grid.Row="2" Margin="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox Grid.Column="0" Margin="1"
+                      DisplayMemberPath="name"
+                      ItemsSource="{Binding Path=Weapon.DamageTypes}" SelectedItem="{Binding Path=Weapon.SelectedDamageType}"/>
+                <TextBox  Grid.Column="1" Margin="1" IsEnabled="True"
+                        Text="{Binding Path=Weapon.DamageValue}"/>
+                <ComboBox Grid.Column="2" Margin="1"
+                      DisplayMemberPath="name"
+                      ItemsSource="{Binding Path=Weapon.Dices}" SelectedItem="{Binding Path=Weapon.SelectedDice}"/>
+            </Grid>
+            <Grid Grid.Row="3" Margin="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Margin="1"
+                    Content="Add Damage" Command="{Binding Path=Weapon.AddDamageCommand}"/>
+                <Button Grid.Column="1" Margin="1"
+                    Content="Delete Damage" Command="{Binding Path=Weapon.DeleteDamageCommand}"/>
+            </Grid>
+        </Grid>
+    <!-- Właściwości wybranej bronii -->
+        <Grid Grid.Column="1" Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="Properties" HorizontalAlignment="Center"/>
+            <DataGrid Grid.Row="1" Margin="2" 
+                                      AutoGenerateColumns="False"
+                                      IsReadOnly="True" SelectionMode="Single"
+                                      ItemsSource="{Binding Path=Weapon.ItemPropertiesDGS}"
+                                      SelectedItem="{Binding Path=Weapon.SelectedProp}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name" Width="2*" Binding="{Binding Name}"/>
+                    <DataGridTextColumn Header="Description" Width="3*" Binding="{Binding Description}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Grid Grid.Row="2" Margin="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="3*"/>
+                </Grid.ColumnDefinitions>
+                <ComboBox Grid.Column="0" Margin="1"
+                      DisplayMemberPath="name"
+                      ItemsSource="{Binding Path=Weapon.LeftoverProperties}" SelectedItem="{Binding Path=Weapon.SelectedLeftoverProp}"/>
+                <TextBox  Grid.Column="1" Margin="1" IsEnabled="False"
+                        Text="{Binding Path=Weapon.SelectedLeftoverProp[description]}"/>
+            </Grid>
+            <Grid Grid.Row="3" Margin="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Margin="1"
+                    Content="Add Property" Command="{Binding Path=Weapon.AddPropertyCommand}"/>
+                <Button Grid.Column="1" Margin="1"
+                    Content="Delete Property" Command="{Binding Path=Weapon.DeletePropertyCommand}"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
